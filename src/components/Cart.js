@@ -1,32 +1,36 @@
-import React, { useEffect, useState } from "react";
+import { inject, observer } from "mobx-react";
 
-export const Cart = (props) => {
-  return (
-    <div>
+import React from "react";
+
+export const Cart = inject("store")(
+  observer((props) => {
+    return (
       <div>
-        {props.cart &&
-          props.cart.map((prod) => {
-            return (
-              <div
-                style={{
-                  display: "flex",
-                  width: 300,
-                  justifyContent: "space-between",
-                }}
-              >
-                <p>{prod.name}</p>
-                <p>{prod.price}</p>
-                <button
-                  onClick={() => {
-                    props.onRemoveFromCart(prod);
+        <div>
+          {props.store.cart &&
+            props.store.cart.map((prod) => {
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    width: 300,
+                    justifyContent: "space-between",
                   }}
                 >
-                  remove from cart
-                </button>
-              </div>
-            );
-          })}
+                  <p>{prod.name}</p>
+                  <p>{prod.price}</p>
+                  <button
+                    onClick={() => {
+                      props.store.removeFromCart(prod);
+                    }}
+                  >
+                    remove from cart
+                  </button>
+                </div>
+              );
+            })}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  })
+);
