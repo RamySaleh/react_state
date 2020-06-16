@@ -1,42 +1,50 @@
 import "../App.css";
 
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import { inject, observer } from "mobx-react";
 
 import { Cart } from "./Cart";
 import { Products } from "./Products";
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
-const App = inject("store")(
-  observer((props) => {
-    return (
-      <>
-        <Router>
-          <div>
-            <ul>
-              <li>
-                <Link to="/products">Products</Link>
-              </li>
-              <li>
-                <Link to="/cart">Cart ({props.store.cart.length})</Link>
-              </li>
-            </ul>
+function App() {
+  const [cart, setCart] = React.useState([]);
 
-            <hr />
+  const handleAddToCart = (product) => {
+    setCart([...cart, product]);
+  };
 
-            <Switch>
-              <Route path="/products">
-                <Products />
-              </Route>
-              <Route path="/cart">
-                <Cart />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-      </>
-    );
-  })
-);
+  const handleRemoveFromCart = (product) => {
+    setCart(cart.filter((prod) => prod.id !== product.id));
+  };
+
+  return (
+    <>
+      <Router>
+        <div>
+          <ul>
+            <li>
+              <Link to="/products">Products</Link>
+            </li>
+            <li>
+              <Link to="/cart">Cart ({cart.length})</Link>
+            </li>
+          </ul>
+
+          <hr />
+
+          <Switch>
+            <Route path="/products">
+              <Products onAddToCart={handleAddToCart} />
+            </Route>
+            <Route path="/cart">
+              <Cart cart={cart} onRemoveFromCart={handleRemoveFromCart} />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </>
+  );
+}
 
 export default App;
