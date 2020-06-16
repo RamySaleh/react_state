@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+import * as cartActions from "../actions/cartActions";
+
+import React from "react";
+import { useDispatch } from "react-redux";
 
 export const Cart = (props) => {
+  const dispatch = useDispatch();
+
   return (
     <div>
       <div>
@@ -18,7 +23,7 @@ export const Cart = (props) => {
                 <p>{prod.price}</p>
                 <button
                   onClick={() => {
-                    props.onRemoveFromCart(prod);
+                    dispatch(cartActions.removeFromCart(prod));
                   }}
                 >
                   remove from cart

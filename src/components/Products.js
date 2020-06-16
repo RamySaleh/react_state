@@ -1,7 +1,13 @@
+import * as cartActions from "../actions/cartActions";
+
 import React, { useEffect, useState } from "react";
+
+import { useDispatch } from "react-redux";
 
 export const Products = (props) => {
   const [products, setProducts] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let products = [
@@ -28,7 +34,7 @@ export const Products = (props) => {
             <p>{prod.price}</p>
             <button
               onClick={() => {
-                props.onAddToCart(prod);
+                dispatch(cartActions.addToCart(prod));
               }}
             >
               add to cart

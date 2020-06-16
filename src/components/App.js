@@ -5,18 +5,10 @@ import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Cart } from "./Cart";
 import { Products } from "./Products";
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
 
 function App() {
-  const [cart, setCart] = React.useState([]);
-
-  const handleAddToCart = (product) => {
-    setCart([...cart, product]);
-  };
-
-  const handleRemoveFromCart = (product) => {
-    setCart(cart.filter((prod) => prod.id !== product.id));
-  };
+  const cart = useSelector((state) => state.cartReducer);
 
   return (
     <>
@@ -30,15 +22,14 @@ function App() {
               <Link to="/cart">Cart ({cart.length})</Link>
             </li>
           </ul>
-
           <hr />
 
           <Switch>
             <Route path="/products">
-              <Products onAddToCart={handleAddToCart} />
+              <Products />
             </Route>
             <Route path="/cart">
-              <Cart cart={cart} onRemoveFromCart={handleRemoveFromCart} />
+              <Cart cart={cart} />
             </Route>
           </Switch>
         </div>
