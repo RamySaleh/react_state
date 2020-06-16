@@ -1,22 +1,14 @@
 import "../App.css";
 
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import React, { useContext } from "react";
 
 import { Cart } from "./Cart";
 import { Products } from "./Products";
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { ProductsContext } from "./Store";
 
 function App() {
-  const [cart, setCart] = React.useState([]);
-
-  const handleAddToCart = (product) => {
-    setCart([...cart, product]);
-  };
-
-  const handleRemoveFromCart = (product) => {
-    setCart(cart.filter((prod) => prod.id !== product.id));
-  };
+  const [cart] = useContext(ProductsContext);
 
   return (
     <>
@@ -35,10 +27,10 @@ function App() {
 
           <Switch>
             <Route path="/products">
-              <Products onAddToCart={handleAddToCart} />
+              <Products />
             </Route>
             <Route path="/cart">
-              <Cart cart={cart} onRemoveFromCart={handleRemoveFromCart} />
+              <Cart />
             </Route>
           </Switch>
         </div>

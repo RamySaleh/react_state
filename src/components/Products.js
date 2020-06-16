@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
+import { ProductsContext } from "./Store";
 
 export const Products = (props) => {
   const [products, setProducts] = useState([]);
+  const [cart, updateCart] = useContext(ProductsContext);
+
+  const addToCart = (product) => {
+    updateCart([...cart, product]);
+  };
 
   useEffect(() => {
     let products = [
@@ -28,7 +35,7 @@ export const Products = (props) => {
             <p>{prod.price}</p>
             <button
               onClick={() => {
-                props.onAddToCart(prod);
+                addToCart(prod);
               }}
             >
               add to cart

@@ -5,10 +5,13 @@ import * as serviceWorker from "./serviceWorker";
 import App from "./components/App";
 import React from "react";
 import ReactDOM from "react-dom";
+import { Store } from "./components/Store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Store>
+      <App />
+    </Store>
   </React.StrictMode>,
   document.getElementById("root")
 );
